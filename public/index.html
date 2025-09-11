@@ -1,1 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halqatu Ibadurrahman Litahfizul Qur'an</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap">
+  <style>
+    :root {
+      --primary-color: #004d40;
+      --secondary-color: #2f4f4f;
+      --light-color: #f0f8f0;
+      --white-color: #ffffff;
+    }
 
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--light-color);
+      color: var(--secondary-color);
+      scroll-behavior: smooth;
+      direction: ltr;
+    }
+
+    body[lang="ar"] {
+      direction: rtl;
+      font-family: 'Amiri', serif;
+    }
+
+    .navbar {
+      background-color: var(--white-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 1rem 0;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--primary-color) !important;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navbar-brand:hover {
+      color: #00695c !important;
+    }
+
+    .navbar-brand img {
+      height: 40px;
+      width: auto;
+      vertical-align: middle;
+    }
+
+    .navbar-title {
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    .nav-link {
+      color: var(--secondary-color) !important;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      border-radius: 5px;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+      background-color: rgba(0, 77, 64, 0.1);
+    }
+
+    .navbar-toggler {
+      border: none;
+      padding: 0.5rem;
+    }
+
+    .navbar-toggler:focus {
+      box-shadow: none;
+    }
+
+    .navbar-toggler-icon {
+      background-image: none;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      transition: transform 0.3s ease;
+    }
+
+    .navbar-toggler-icon::before {
+      content: "\f0c9";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+    }
+
+    .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+      content: "\f00d";
+    }
+
+    .hero-section {
+      padding: 4rem 0;
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      height: 470px;
+      background-image: url('./assets/images/hhero.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+  
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .view-only-media video {
+      pointer-events: auto;
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+    }
+
+    footer a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--white-color);
+    }
+
+    .footer-link {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .social-link {
+      color: rgba(255, 255, 255, 0.7);
+      margin-right: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .social-link:hover {
+      color: #0d6efd;
+    }
+                .logo-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%; /* circular logo */
+        object-fit: cover;
+        }
+
+        /* Make dropdown look modern */
+        .navbar .dropdown-menu {
+        border-radius: 10px;
+        padding: 8px;
+        }
+
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--white-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .language-toggle {
+      cursor: pointer;
+      color: var(--secondary-color);
+    }
+
+    .language-toggle:hover {
+      color: var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+      .hero-section {
+        height: 300px;
+        padding: 2rem 0;
+      }
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+      .navbar-nav {
+        text-align: center;
+      }
+      .navbar-brand img {
+        height: 30px;
+      }
+      .view-only-media video {
+        height: 200px;
+      }
+    }
+    .login-buttons a {
+  margin: 8px;          /* spacing between buttons */
+  min-width: 200px;     /* keeps buttons wide enough */
+}
+
+/* On small screens (mobile), stack vertically */
+@media (max-width: 576px) {
+  .login-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .login-buttons a {
+    width: 100%;       /* make full width */
+    max-width: 280px;  /* limit size so not too wide */
+  }
+}
+
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+                    <!-- Navigation Bar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                <img src="assets/images/hlogo.jpg" class="logo-img" alt="Logo">
+                <span class="navbar-title" 
+                        data-en="Halqatu Ibadurrahman Litahfizul Qur'an" 
+                        data-ar="حلقة الإبادور الرحمن لتحفيظ القرآن">
+                    Halqatu Ibadurrahman Litahfizul Qur'an
+                </span>
+                </a>
+
+                <!-- Mobile Toggler -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarNav" aria-controls="navbarNav" 
+                        aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    
+                    <li class="nav-item">
+                    <a class="nav-link" href="#qiraa" 
+                        data-en="Qiraa Showcase" 
+                        data-ar="عرض قراءات">
+                        Qiraa
+                    </a>
+                    </li>
+
+                    <!-- ✅ Logins Dropdown -->
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" 
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false" 
+                        data-en="Login" data-ar="دخول">
+                        Login
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                        <li>
+                        <a class="dropdown-item" href="/student-login" 
+                            data-en="Student Login" data-ar="دخول الطالب">
+                            Student Login
+                        </a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="/staff-login" 
+                            data-en="Staff Login" data-ar="دخول الموظف">
+                            Staff Login
+                        </a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="/admin-login" 
+                            data-en="Admin Login" data-ar="دخول الإدارة">
+                            Admin Login
+                        </a>
+                        </li>
+                    </ul>
+                    </li>
+
+                    <li class="nav-item">
+                    <a class="nav-link" href="#admission" 
+                        data-en="Admission" data-ar="القبول">
+                        Admission
+                    </a>
+                    </li>
+
+                                    <!-- ✅ Back Button -->
+                    <li class="nav-item">
+                    <a href="https://www.irc.com.ng" 
+                        class="btn btn-outline-secondary ms-2 mb-3 mb-lg-0"
+                        data-en="Back" data-ar="رجوع">
+                        Back
+                    </a>
+                    </li>
+
+                    <!-- ✅ Language Toggle as Button -->
+                    <li class="nav-item">
+                    <button class="btn btn-outline-primary ms-2 mb-1 mb-lg-0" id="languageToggle" data-lang="ar">
+                        العربية
+                    </button>
+                    </li>
+
+                </ul>
+                </div>
+            </div>
+            </nav>
+
+            <!-- Hero Section -->
+            <section id="home" class="hero-section">
+            <div class="hero-overlay"></div> <!-- dark overlay -->
+            <div class="hero-content">
+                <h1 class="display-4 fw-bold" 
+                    data-en="Welcome to Halqatu Ibadurrahman Litahfizul Qur'an" 
+                    data-ar="مرحبًا بحلقة الإبادور الرحمن لتحفيظ القرآن">
+                Welcome to Halqatu Ibadurrahman Litahfizul Qur'an
+                </h1>
+                <p class="lead" 
+                data-en="Excellence in Quranic Memorization and Islamic Studies." 
+                data-ar="التميز في حفظ القرآن والدراسات الإسلامية">
+                Excellence in Quranic Memorization and Islamic Studies.
+                </p>
+            </div>
+            </section>
+
+<!-- Login Buttons Section -->
+<section id="login" class="py-4 bg-white">
+  <div class="container text-center login-buttons">
+    <a href="/admin-login" class="btn btn-primary" data-en="Admin Login" data-ar="تسجيل دخول الإدارة">Admin Login</a>
+    <a href="/staff-login" class="btn btn-primary" data-en="Staff Login" data-ar="تسجيل دخول الموظفين">Staff Login</a>
+    <a href="/student-login" class="btn btn-primary" data-en="Student Login" data-ar="تسجيل دخول الطالب">Student Login</a>
+  </div>
+</section>
+    <!-- Qiraa Showcase Section -->
+    <section id="qiraa" class="py-5">
+        <div class="container fade-up">
+            <h2 class="text-center mb-5" data-en="Qiraa Showcase" data-ar="عرض القراءة">Qiraa Showcase</h2>
+            <div class="row g-4 view-only-media">
+                <div class="col-6 col-md-4">
+                    <video controls controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;">
+                        <source src="assets/videos/video2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="col-6 col-md-4">
+                    <video controls controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;">
+                        <source src="/assets/videos/fiqh_discussion1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="col-6 col-md-4">
+                    <video controls controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;">
+                        <source src="/assets/videos/quran_recitation2.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Section -->
+    <section id="admission" class="py-5">
+        <div class="container fade-up">
+            <h2 class="text-center mb-4" data-en="Book for Tahfiz Admission" data-ar="حجز للقبول في التحفيظ">Book for Tahfiz Admission</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="alert alert-info text-center mb-4" role="alert" data-en="Admissions are processed on a first-come, first-served basis. The next admission period begins in December 2025." data-ar="يتم معالجة القبول على أساس الأسبقية. تبدأ فترة القبول التالية في ديسمبر 2025.">
+                        <strong data-en="Important:" data-ar="هام:">Important:</strong> Admissions are processed on a first-come, first-served basis. The next admission period begins in December 2025.
+                    </div>
+                    <form class="p-4 rounded shadow-sm bg-white" action="/api/bookings" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label" data-en="Candidate Name" data-ar="اسم المرشح">Candidate Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label form-label-optional" data-en="Your Email (Optional)" data-ar="بريدك الإلكتروني (اختياري)">Your Email (Optional)</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gender" class="form-label" data-en="Gender" data-ar="الجنس">Gender</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                                <select class="form-control" id="gender" name="gender" required>
+                                    <option value="" disabled selected data-en="Select Gender" data-ar="اختر الجنس">Select Gender</option>
+                                    <option value="Male" data-en="Male" data-ar="ذكر">Male</option>
+                                    <option value="Female" data-en="Female" data-ar="أنثى">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date_of_birth" class="form-label" data-en="Date of Birth" data-ar="تاريخ الميلاد">Date of Birth</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label" data-en="Parent or Guardian Contact" data-ar="رقم الاتصال بالوالدين أو الوصي">Parent or Guardian Contact</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label" data-en="Address" data-ar="العنوان">Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label form-label-optional" data-en="Your Message (Optional)" data-ar="رسالتك (اختياري)">Your Message (Optional)</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                                <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary" data-en="Submit" data-ar="إرسال">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#qiraa" class="footer-link" data-en="Qiraa Showcase" data-ar="عرض القراءة">Qiraa Showcase</a></li>
+                        <li><a href="#admission" class="footer-link" data-en="Book for Admission" data-ar="حجز للقبول">Book for Admission</a></li>
+                        <li><a href="https://irc-1-1mmd.onrender.com/" class="footer-link" data-en="Ibadurrahman Main Page" data-ar="الصفحة الرئيسية للإبادور الرحمن">Ibadurrahman Main Page</a></li>
+                    </ul>
+                </div>
+           <div class="col-md-4">
+                    <h5 class="fw-bold" data-en="Contact Details" data-ar="تفاصيل الاتصال">Contact Details</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="https://www.google.com/maps/search/?api=1&query=No.+1968+A,+Gwammaja+Housing+Estate,+Audu+Wawu+Street,+opp.+IHYA'USSUNNAH+JUMA'A+MOSQUE,+Dala+L.G.A,+Kano,+Nigeria" 
+                               target="_blank" class="footer-link" data-en="No. 1968 A, Gwammaja Housing Estate, Audu Wawu Street, opp. IHYA'USSUNNAH JUMA'A MOSQUE, Dala L.G.A, Kano State, Nigeria" 
+                               data-ar="رقم 1968 أ، منطقة غواماجا السكنية، شارع عودو واو، مقابل مسجد إحياء السنة الجمعة، دالا، ولاية كانو، نيجيريا">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                <span>No. 1968 A, Gwammaja Housing Estate,<br>Audu Wawu Street, opp. IHYA'USSUNNAH JUMA'A MOSQUE,<br>Dala L.G.A, Kano State, Nigeria</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:info@irc.com.ng" class="footer-link" data-en="info@irc.com.ng" data-ar="info@hir.com.ng">
+                                <i class="fas fa-envelope me-2"></i>info@hir.com.ng
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:08033459721" class="footer-link" data-en="08033459721" data-ar="08033459721">
+                                <i class="fas fa-phone me-2"></i>08033459721
+                            </a>,
+                            <a href="tel:09062171496" class="footer-link" data-en="09062171496" data-ar="09062171496">
+                                09062171496
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold" data-en="Follow Us" data-ar="تابعنا">Follow Us</h5>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f fa-2x"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter fa-2x"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram fa-2x"></i></a>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <small data-en="&copy; 2025 Halqatu Ibadurrahman Litahfizul Qur'an. All Rights Reserved." data-ar="&copy; 2025 حلقة الإبادور الرحمن لتحفيظ القرآن. جميع الحقوق محفوظة.">&copy; 2025 Halqatu Ibadurrahman Litahfizul Qur'an. All Rights Reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" id="back-to-top" class="btn btn-primary rounded-circle" style="display: none; position: fixed; bottom: 20px; right: 20px;"><i class="fas fa-arrow-up"></i></a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    // === Preloader ===
+    const preloader = document.getElementById("preloader");
+    window.addEventListener("load", () => {
+        setTimeout(() => preloader.classList.add("hidden"), 600);
+    });
+
+    // === Fade-up animation ===
+    const fadeUpObserver = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.15 }
+    );
+    document.querySelectorAll(".fade-up").forEach(el => fadeUpObserver.observe(el));
+
+    // === Back to Top button ===
+    const backToTopBtn = document.getElementById("back-to-top");
+    window.addEventListener("scroll", () => {
+        backToTopBtn.style.display = window.scrollY > 250 ? "block" : "none";
+    });
+    backToTopBtn.addEventListener("click", e => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // === Auto-collapse navbar on link click (exclude dropdowns) ===
+const navbarCollapse = document.getElementById("navbarNav");
+document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+        const isDropdownToggle = link.classList.contains("dropdown-toggle");
+        const isInsideDropdown = link.closest(".dropdown-menu");
+
+        // ✅ Only collapse if it's a regular nav-link (not dropdown toggle or dropdown item)
+        if (!isDropdownToggle && !isInsideDropdown) {
+            if (navbarCollapse.classList.contains("show")) {
+                bootstrap.Collapse.getInstance(navbarCollapse).hide();
+            }
+        }
+    });
+});
+
+    // === Language Toggle ===
+    const languageToggle = document.getElementById("languageToggle");
+    languageToggle.addEventListener("click", () => {
+        const isArabic = document.body.getAttribute("lang") === "ar";
+        const newLang = isArabic ? "en" : "ar";
+        document.body.setAttribute("lang", newLang);
+        languageToggle.textContent = isArabic ? "العربية" : "English";
+        languageToggle.setAttribute("data-lang", isArabic ? "ar" : "en");
+
+        document.querySelectorAll("[data-en]").forEach(elem => {
+            const text = elem.getAttribute(`data-${newLang}`);
+            if (!text) return;
+            if (elem.tagName === "INPUT" || elem.tagName === "TEXTAREA") {
+                elem.placeholder = text;
+            } else if (elem.tagName === "OPTION") {
+                elem.textContent = text;
+            } else {
+                elem.innerHTML = text;
+            }
+        });
+    });
+
+    // === Admission Form Submission ===
+    const admissionForm = document.querySelector("form");
+    if (admissionForm) {
+        admissionForm.addEventListener("submit", async e => {
+            e.preventDefault();
+            const formData = new FormData(admissionForm);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const res = await fetch("/api/bookings", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                alert(result.message || "Form submitted!");
+                if (result.success) admissionForm.reset();
+            } catch (err) {
+                alert("Error submitting form. Please try again.");
+                console.error(err);
+            }
+        });
+    }
+
+    // === Prevent video right-click/download ===
+    document.querySelectorAll("video").forEach(video => {
+        video.addEventListener("contextmenu", e => e.preventDefault());
+        video.setAttribute("controlsList", "nodownload noremoteplayback");
+        video.setAttribute("disablePictureInPicture", "");
+    });
+});
+
+    </script>
+</body>
+</html>
