@@ -333,7 +333,7 @@
 
                                     <!-- ✅ Back Button -->
                     <li class="nav-item">
-                    <a href="https://www.irc.com.ng" 
+                    <a href="https://irc-1-1mmd.onrender.com" 
                         class="btn btn-outline-secondary ms-2 mb-3 mb-lg-0"
                         data-en="Back" data-ar="رجوع">
                         Back
@@ -560,21 +560,32 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    // === Auto-collapse navbar on link click (exclude dropdowns) ===
+   // === Auto-collapse navbar on link click (nav-links + buttons) ===
 const navbarCollapse = document.getElementById("navbarNav");
+function closeNavbar() {
+    if (navbarCollapse.classList.contains("show")) {
+        bootstrap.Collapse.getInstance(navbarCollapse).hide();
+    }
+}
+
+// Handle normal nav links
 document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
     link.addEventListener("click", (e) => {
         const isDropdownToggle = link.classList.contains("dropdown-toggle");
         const isInsideDropdown = link.closest(".dropdown-menu");
 
-        // ✅ Only collapse if it's a regular nav-link (not dropdown toggle or dropdown item)
         if (!isDropdownToggle && !isInsideDropdown) {
-            if (navbarCollapse.classList.contains("show")) {
-                bootstrap.Collapse.getInstance(navbarCollapse).hide();
-            }
+            closeNavbar();
         }
     });
 });
+
+// Handle Back button + Language toggle
+const backBtn = document.querySelector('.navbar .btn.btn-outline-secondary');
+const langBtn = document.getElementById("languageToggle");
+
+if (backBtn) backBtn.addEventListener("click", closeNavbar);
+if (langBtn) langBtn.addEventListener("click", closeNavbar);
 
     // === Language Toggle ===
     const languageToggle = document.getElementById("languageToggle");
