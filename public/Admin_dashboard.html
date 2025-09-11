@@ -132,32 +132,32 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="p-4 border-b border-gray-700">
-            <h3 class="text-xl font-bold text-white">Admin Panel</h3>
+            <h3 class="text-xl font-bold text-white" data-translate="adminPanel">Admin Panel</h3>
         </div>
         <ul class="nav flex-column mt-4">
             <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="#" class="nav-link active" aria-current="page"><i class="fas fa-tachometer-alt"></i> <span data-translate="dashboard">Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link"><i class="fas fa-book"></i> Bookings</a>
+                <a href="#" class="nav-link"><i class="fas fa-book"></i> <span data-translate="bookings">Bookings</span></a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link"><i class="fas fa-users"></i> Staff</a>
+                <a href="#" class="nav-link"><i class="fas fa-users"></i> <span data-translate="staff">Staff</span></a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link"><i class="fas fa-user-graduate"></i> Students</a>
+                <a href="#" class="nav-link"><i class="fas fa-user-graduate"></i> <span data-translate="students">Students</span></a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link"><i class="fas fa-money-bill-wave"></i> Fees</a>
+                <a href="#" class="nav-link"><i class="fas fa-money-bill-wave"></i> <span data-translate="fees">Fees</span></a>
             </li>
         </ul>
         <div class="mt-auto p-4">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-user-circle me-2"></i>
-                <strong>Admin</strong>
+                <strong data-translate="admin">Admin</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow mt-2">
-                <li><a class="dropdown-item" href="/logout" id="logoutBtn">Sign out</a></li>
+                <li><a class="dropdown-item" href="/logout" id="logoutBtn" data-translate="signOut">Sign out</a></li>
             </ul>
         </div>
     </div>
@@ -165,7 +165,7 @@
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <div class="main-content-header mb-4">
-            <h2 class="text-2xl font-semibold">Dashboard Overview</h2>
+            <h2 class="text-2xl font-semibold" data-translate="dashboardOverview">Dashboard Overview</h2>
             <button id="sidebarToggleMobile" class="btn btn-primary d-md-none mt-2">
                 <i class="fas fa-bars"></i>
             </button>
@@ -177,7 +177,7 @@
             <div class="dashboard-card card-gradient-1 text-white">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h5 class="text-sm font-medium opacity-90">New Bookings</h5>
+                        <h5 class="text-sm font-medium opacity-90" data-translate="newBookings">New Bookings</h5>
                         <p class="text-4xl font-bold mt-1">12</p>
                     </div>
                     <div class="p-3 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
@@ -190,7 +190,7 @@
             <div class="dashboard-card card-gradient-2 text-white">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h5 class="text-sm font-medium opacity-90">Total Students</h5>
+                        <h5 class="text-sm font-medium opacity-90" data-translate="totalStudents">Total Students</h5>
                         <p class="text-4xl font-bold mt-1">150</p>
                     </div>
                     <div class="p-3 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
@@ -203,7 +203,7 @@
             <div class="dashboard-card card-gradient-3 text-white">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h5 class="text-sm font-medium opacity-90">Pending Fees</h5>
+                        <h5 class="text-sm font-medium opacity-90" data-translate="pendingFees">Pending Fees</h5>
                         <p class="text-4xl font-bold mt-1">7</p>
                     </div>
                     <div class="p-3 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
@@ -212,7 +212,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- Password Change Modal -->
@@ -220,28 +219,26 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-b-0">
-                    <h5 class="modal-title text-xl font-semibold" id="passwordChangeModalLabel">Change Password</h5>
+                    <h5 class="modal-title text-xl font-semibold" id="passwordChangeModalLabel" data-translate="changePassword">Change Password</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="alert alert-info text-center mb-4" role="alert">
-                        First login detected. Please update your credentials for security.
-                    </div>
+                    <div class="alert alert-info text-center mb-4" role="alert" data-translate="firstLoginNotice">First login detected. Please update your credentials for security.</div>
                     <form id="passwordChangeForm">
                         <div class="mb-4">
-                            <label for="newUsername" class="block text-sm font-medium">New Username</label>
+                            <label for="newUsername" class="block text-sm font-medium" data-translate="newUsernameLabel">New Username</label>
                             <input type="text" class="form-control w-full mt-1 p-2 rounded" id="newUsername" name="newUsername" required>
                             <input type="hidden" id="currentUsername" name="username" value="Admin">
                         </div>
                         <div class="mb-4">
-                            <label for="newPassword" class="block text-sm font-medium">New Password</label>
+                            <label for="newPassword" class="block text-sm font-medium" data-translate="newPasswordLabel">New Password</label>
                             <input type="password" class="form-control w-full mt-1 p-2 rounded" id="newPassword" name="newPassword" required>
                         </div>
                         <div class="mb-4">
-                            <label for="confirmPassword" class="block text-sm font-medium">Confirm Password</label>
+                            <label for="confirmPassword" class="block text-sm font-medium" data-translate="confirmPasswordLabel">Confirm Password</label>
                             <input type="password" class="form-control w-full mt-1 p-2 rounded" id="confirmPassword" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-full py-2">Update Credentials</button>
+                        <button type="submit" class="btn btn-primary w-full py-2" data-translate="updateCredentials">Update Credentials</button>
                     </form>
                 </div>
             </div>
@@ -260,14 +257,86 @@
                     <p id="messageText" class="text-lg"></p>
                 </div>
                 <div class="modal-footer border-t-0 justify-center">
-                    <button type="button" class="btn btn-secondary py-2 px-4" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary py-2 px-4" data-bs-dismiss="modal" data-translate="close">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Language Toggle -->
+    <div class="text-center mt-4">
+        <button id="langToggle" class="btn btn-secondary" data-translate="toggleLanguage">العربية</button>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const translations = {
+            en: {
+                adminPanel: "Admin Panel",
+                dashboard: "Dashboard",
+                bookings: "Bookings",
+                staff: "Staff",
+                students: "Students",
+                fees: "Fees",
+                admin: "Admin",
+                signOut: "Sign out",
+                dashboardOverview: "Dashboard Overview",
+                newBookings: "New Bookings",
+                totalStudents: "Total Students",
+                pendingFees: "Pending Fees",
+                changePassword: "Change Password",
+                firstLoginNotice: "First login detected. Please update your credentials for security.",
+                newUsernameLabel: "New Username",
+                newPasswordLabel: "New Password",
+                confirmPasswordLabel: "Confirm Password",
+                updateCredentials: "Update Credentials",
+                close: "Close",
+                toggleLanguage: "العربية"
+            },
+            ar: {
+                adminPanel: "لوحة التحكم الإدارية",
+                dashboard: "لوحة القيادة",
+                bookings: "الحجوزات",
+                staff: "العاملون",
+                students: "الطلاب",
+                fees: "الرسوم",
+                admin: "المشرف",
+                signOut: "تسجيل الخروج",
+                dashboardOverview: "نظرة عامة على لوحة القيادة",
+                newBookings: "حجوزات جديدة",
+                totalStudents: "إجمالي الطلاب",
+                pendingFees: "الرسوم المعلقة",
+                changePassword: "تغيير كلمة المرور",
+                firstLoginNotice: "تم اكتشاف تسجيل الدخول الأول. يرجى تحديث بيانات الاعتماد الخاصة بك للأمان.",
+                newUsernameLabel: "اسم المستخدم الجديد",
+                newPasswordLabel: "كلمة المرور الجديدة",
+                confirmPasswordLabel: "تأكيد كلمة المرور",
+                updateCredentials: "تحديث بيانات الاعتماد",
+                close: "إغلاق",
+                toggleLanguage: "English"
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'en';
+
+        function translatePage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                element.textContent = translations[lang][key] || element.textContent;
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+            document.getElementById('langToggle').textContent = translations[lang]['toggleLanguage'];
+        }
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            translatePage(currentLang);
+        });
+
+        // Initialize translation
+        translatePage(currentLang);
+
         document.addEventListener('DOMContentLoaded', () => {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
@@ -320,7 +389,7 @@
                 const username = document.getElementById('currentUsername').value;
 
                 if (newPassword !== confirmPassword) {
-                    showMessageModal("Error", "Passwords do not match!");
+                    showMessageModal(translations[currentLang]['close'], translations[currentLang]['confirmPasswordLabel'] + " " + translations[currentLang]['newPasswordLabel']);
                     return;
                 }
 
@@ -334,16 +403,16 @@
                     const result = await response.json();
                     
                     if (result.success) {
-                        showMessageModal("Success", result.message);
+                        showMessageModal(translations[currentLang]['updateCredentials'], result.message);
                         setTimeout(() => {
                             window.location.href = result.redirect;
                         }, 2000);
                     } else {
-                        showMessageModal("Error", result.message);
+                        showMessageModal(translations[currentLang]['close'], result.message);
                     }
                 } catch (error) {
                     console.error('Update error:', error);
-                    showMessageModal("Error", 'An unexpected error occurred. Please try again.');
+                    showMessageModal(translations[currentLang]['close'], translations[currentLang]['authorizedOnly']);
                 }
             });
 
@@ -353,5 +422,3 @@
             });
         });
     </script>
-</body>
-</html>
