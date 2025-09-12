@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4285f4; /* Firebase blue */
+            --secondary-color: #34a853; /* Firebase green */
+            --accent-color: #fbbc05; /* Firebase yellow */
+            --background-color: #f5f7fa;
+            --text-color: #202124;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #202124;
+            color: #fff;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding-top: 1rem;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-260px);
+        }
+
+        .sidebar .nav-link {
+            color: #bdc1c6;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 0.75rem;
+            width: 1.25rem;
+            text-align: center;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-260px);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .main-content-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        /* Updated dashboard card styling with gradients */
+        .dashboard-card {
+            background: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-gradient-1 {
+            background-image: linear-gradient(135deg, #4285f4, #669df6);
+        }
+
+        .card-gradient-2 {
+            background-image: linear-gradient(135deg, #34a853, #57b76f);
+        }
+
+        .card-gradient-3 {
+            background-image: linear-gradient(135deg, #fbbc05, #fbdc59);
+        }
+
+        .modal-content {
+            border-radius: 0.75rem;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #3267d6;
+            border-color: #3267d6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="p-4 border-b border-gray-700">
+            <h3 class="text-xl font-bold text-white" data-translate="adminPanel">Admin Panel</h3>
+        </div>
+        <ul class="nav flex-column mt-4">
+            <li class="nav-item">
+                <a href="#" class="nav-link active" aria-current="page"><i class="fas fa-tachometer-alt"></i> <span data-translate="dashboard">Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class="fas fa-book"></i> <span data-translate="bookings">Bookings</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class="fas fa-users"></i> <span data-translate="staff">Staff</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class="fas fa-user-graduate"></i> <span data-translate="students">Students</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"><i class="fas fa-money-bill-wave"></i> <span data-translate="fees">Fees</span></a>
+            </li>
+        </ul>
+        <div class="mt-auto p-4">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle me-2"></i>
+                <strong data-translate="admin">Admin</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow mt-2">
+                <li><a class="dropdown-item" href="/logout" id="logoutBtn" data-translate="signOut">Sign out</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="main-content-header mb-4">
+            <h2 class="text-2xl font-semibold" data-translate="dashboardOverview">Dashboard Overview</h2>
+            <button id="sidebarToggleMobile" class="btn btn-primary d-md-none mt-2">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Updated Dashboard Overview Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- New Bookings Card -->
+            <div class="dashboard-card card-gradient-1 text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h5 class="text-sm font-medium opacity-90" data-translate="newBookings">New Bookings</h5>
+                        <p class="text-4xl font-bold mt-1">12</p>
+                    </div>
+                    <div class="p-3 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <i class="fas fa-calendar-check text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Students Card -->
+            <div class="dashboard-card card-gradient-2 text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h5 class="text-sm font-medium opacity-90" data-translate="totalStudents">Total Students</h5>
+                        <p class="text-4xl font-bold mt-1">150</p>
+                    </div>
+                    <div class="p-3 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <i class="fas fa-users text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Fees Card -->
+            <div class="dashboard-card card-gradient-3 text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h5 class="text-sm font-medium opacity-90" data-translate="pendingFees">Pending Fees</h5>
+                        <p class="text-4xl font-bold mt-1">7</p>
+                    </div>
+                    <div class="p-3 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <i class="fas fa-money-bill-wave text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Change Modal -->
+    <div class="modal fade" id="passwordChangeModal" tabindex="-1" aria-labelledby="passwordChangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-b-0">
+                    <h5 class="modal-title text-xl font-semibold" id="passwordChangeModalLabel" data-translate="changePassword">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="alert alert-info text-center mb-4" role="alert" data-translate="firstLoginNotice">First login detected. Please update your credentials for security.</div>
+                    <form id="passwordChangeForm">
+                        <div class="mb-4">
+                            <label for="newUsername" class="block text-sm font-medium" data-translate="newUsernameLabel">New Username</label>
+                            <input type="text" class="form-control w-full mt-1 p-2 rounded" id="newUsername" name="newUsername" required>
+                            <input type="hidden" id="currentUsername" name="username" value="Admin">
+                        </div>
+                        <div class="mb-4">
+                            <label for="newPassword" class="block text-sm font-medium" data-translate="newPasswordLabel">New Password</label>
+                            <input type="password" class="form-control w-full mt-1 p-2 rounded" id="newPassword" name="newPassword" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="confirmPassword" class="block text-sm font-medium" data-translate="confirmPasswordLabel">Confirm Password</label>
+                            <input type="password" class="form-control w-full mt-1 p-2 rounded" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full py-2" data-translate="updateCredentials">Update Credentials</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal fade message-modal" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-b-0">
+                    <h5 class="modal-title text-xl font-semibold" id="messageModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <p id="messageText" class="text-lg"></p>
+                </div>
+                <div class="modal-footer border-t-0 justify-center">
+                    <button type="button" class="btn btn-secondary py-2 px-4" data-bs-dismiss="modal" data-translate="close">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="text-center mt-4">
+        <button id="langToggle" class="btn btn-secondary" data-translate="toggleLanguage">العربية</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const translations = {
+            en: {
+                adminPanel: "Admin Panel",
+                dashboard: "Dashboard",
+                bookings: "Bookings",
+                staff: "Staff",
+                students: "Students",
+                fees: "Fees",
+                admin: "Admin",
+                signOut: "Sign out",
+                dashboardOverview: "Dashboard Overview",
+                newBookings: "New Bookings",
+                totalStudents: "Total Students",
+                pendingFees: "Pending Fees",
+                changePassword: "Change Password",
+                firstLoginNotice: "First login detected. Please update your credentials for security.",
+                newUsernameLabel: "New Username",
+                newPasswordLabel: "New Password",
+                confirmPasswordLabel: "Confirm Password",
+                updateCredentials: "Update Credentials",
+                close: "Close",
+                toggleLanguage: "العربية"
+            },
+            ar: {
+                adminPanel: "لوحة التحكم الإدارية",
+                dashboard: "لوحة القيادة",
+                bookings: "الحجوزات",
+                staff: "العاملون",
+                students: "الطلاب",
+                fees: "الرسوم",
+                admin: "المشرف",
+                signOut: "تسجيل الخروج",
+                dashboardOverview: "نظرة عامة على لوحة القيادة",
+                newBookings: "حجوزات جديدة",
+                totalStudents: "إجمالي الطلاب",
+                pendingFees: "الرسوم المعلقة",
+                changePassword: "تغيير كلمة المرور",
+                firstLoginNotice: "تم اكتشاف تسجيل الدخول الأول. يرجى تحديث بيانات الاعتماد الخاصة بك للأمان.",
+                newUsernameLabel: "اسم المستخدم الجديد",
+                newPasswordLabel: "كلمة المرور الجديدة",
+                confirmPasswordLabel: "تأكيد كلمة المرور",
+                updateCredentials: "تحديث بيانات الاعتماد",
+                close: "إغلاق",
+                toggleLanguage: "English"
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'en';
+
+        function translatePage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                element.textContent = translations[lang][key] || element.textContent;
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+            document.getElementById('langToggle').textContent = translations[lang]['toggleLanguage'];
+        }
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            translatePage(currentLang);
+        });
+
+        // Initialize translation
+        translatePage(currentLang);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const sidebarToggleMobile = document.getElementById('sidebarToggleMobile');
+
+            // Initialize sidebar as collapsed on mobile
+            if (window.innerWidth <= 768) {
+                sidebar.classList.add('collapsed');
+            }
+
+            sidebarToggleMobile.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('collapsed');
+            });
+
+            // Remove desktop toggle behavior (already handled by CSS)
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            if (sidebarToggle) {
+                sidebarToggle.style.display = 'none';
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const isFirstLogin = urlParams.get('first_login') === 'true';
+            
+            const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+            const messageModalLabel = document.getElementById('messageModalLabel');
+            const messageText = document.getElementById('messageText');
+
+            function showMessageModal(title, message) {
+                messageModalLabel.textContent = title;
+                messageText.textContent = message;
+                messageModal.show();
+            }
+
+            if (isFirstLogin) {
+                const passwordChangeModal = new bootstrap.Modal(document.getElementById('passwordChangeModal'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                passwordChangeModal.show();
+            }
+
+            document.getElementById('passwordChangeForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                
+                const newUsername = document.getElementById('newUsername').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const username = document.getElementById('currentUsername').value;
+
+                if (newPassword !== confirmPassword) {
+                    showMessageModal(translations[currentLang]['close'], translations[currentLang]['confirmPasswordLabel'] + " " + translations[currentLang]['newPasswordLabel']);
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/update-superadmin', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, newUsername, newPassword })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showMessageModal(translations[currentLang]['updateCredentials'], result.message);
+                        setTimeout(() => {
+                            window.location.href = result.redirect;
+                        }, 2000);
+                    } else {
+                        showMessageModal(translations[currentLang]['close'], result.message);
+                    }
+                } catch (error) {
+                    console.error('Update error:', error);
+                    showMessageModal(translations[currentLang]['close'], translations[currentLang]['authorizedOnly']);
+                }
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', (event) => {
+                event.preventDefault();
+                window.location.href = '/admin-login';
+            });
+        });
+    </script>
